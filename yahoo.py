@@ -54,4 +54,4 @@ def get_stocks():
 
   json_out = df.to_dict(orient='records')
   print(json_out)
-  return {'stocks': json_out}
+  return json_out
