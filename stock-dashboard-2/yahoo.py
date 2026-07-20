@@ -35,6 +35,9 @@ for stock in collection.find():
   data['10D'] = data['Close'].rolling(10).mean().round(2)
   data['5D'] = data['Close'].rolling(5).mean().round(2)
 
+  # drop every row except the last 
+  data = data.tail(1)
+
   # df = pd.DataFrame(data)
 
   # data = data.rename(columns={'Ticker': 'ticker'})
