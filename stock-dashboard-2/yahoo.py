@@ -16,6 +16,8 @@ for stock in collection.find():
   # Reset the index to make 'Date' a regular column
   data.reset_index(inplace=True)
 
+  data = data.round(2)
+
   # add 'ticker' column
   data['ticker'] = stock['ticker']
 
@@ -24,6 +26,14 @@ for stock in collection.find():
 
   # add timestamp column
   data['Time'] = datetime.now().strftime('%H:%M:%S')
+
+  # add moving average columns
+  data['200D'] = data['Close'].rolling(200).mean().round(2)
+  data['100D'] = data['Close'].rolling(100).mean().round(2)
+  data['50D'] = data['Close'].rolling(50).mean().round(2)
+  data['20D'] = data['Close'].rolling(20).mean().round(2)
+  data['10D'] = data['Close'].rolling(10).mean().round(2)
+  data['5D'] = data['Close'].rolling(5).mean().round(2)
 
   # df = pd.DataFrame(data)
 
