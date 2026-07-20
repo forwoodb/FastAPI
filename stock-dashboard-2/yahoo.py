@@ -50,5 +50,8 @@ for stock in collection.find():
 
   # data = data.rename(columns={'Ticker': 'ticker'})
   
-json_out = df.to_json()
-print(json_out)
+@app.post('get_stocks')
+def get_stocks():
+  json_out = df.to_json()
+  print(json_out)
+  return {'stocks': json_out}
