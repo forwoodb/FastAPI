@@ -21,7 +21,10 @@ for stock in collection.find():
 
   # drop 2nd level of column headers
   data.columns = data.columns.droplevel(1)
-  
+
+  # add timestamp column
+  data['Time'] = datetime.now().strftime('%H:%M:%S')
+
   # df = pd.DataFrame(data)
 
   # data = data.rename(columns={'Ticker': 'ticker'})
