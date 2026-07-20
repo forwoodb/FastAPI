@@ -16,8 +16,14 @@ for stock in collection.find():
   # Reset the index to make 'Date' a regular column
   data.reset_index(inplace=True)
 
+  # add 'ticker' column
+  data['ticker'] = stock['ticker']
+
+  # drop 2nd level of column headers
+  data.columns = data.columns.droplevel(1)
+  
   # df = pd.DataFrame(data)
 
   # data = data.rename(columns={'Ticker': 'ticker'})
-  data['ticker'] = stock['ticker']
+  
   print(data)
