@@ -9,5 +9,7 @@ client = MongoClient(dbUrl, tls=True,  tlsAllowInvalidCertificates=True)
 db = client['test']
 collection = db['stocks']
 
+# Get stock data from yfinance
 for stock in collection.find():
-  print(stock)
+  data = yf.download(tickers=stock['ticker'], period='200d', interval='1d')
+  print(data)
