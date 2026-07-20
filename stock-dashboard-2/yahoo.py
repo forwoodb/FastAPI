@@ -2,12 +2,18 @@ import pandas as pd
 import yfinance as yf
 from pymongo import MongoClient
 from datetime import datetime
+from fastapi import FastAPI
+
+app = FastAPI()
 
 # connect to db
 dbUrl = 'mongodb+srv://forwoodb:q84ItPYwNm77gfFO@cluster0.7vsg6zn.mongodb.net/?appName=Cluster0'
 client = MongoClient(dbUrl, tls=True,  tlsAllowInvalidCertificates=True)
 db = client['test']
 collection = db['stocks']
+
+# create dataframe
+df = pd.DataFrame()
 
 # Get stock data from yfinance
 for stock in collection.find():
@@ -38,8 +44,11 @@ for stock in collection.find():
   # drop every row except the last 
   data = data.tail(1)
 
+  df = pd.concat((df, data), ignore_index=True)
+
   # df = pd.DataFrame(data)
 
   # data = data.rename(columns={'Ticker': 'ticker'})
   
-  print(data)
+json_out = df.to_json()
+print(json_out)
